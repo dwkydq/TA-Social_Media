@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex flex-col h-screen sticky top-0 bg-black border-r border-zinc-800">
+
+    <div class="flex items-center gap-3 px-4 py-3 border-b border-zinc-800 bg-zinc-900/90 backdrop-blur z-10 shrink-0">
+        <a href="{{ url_for('chat.chat_list') }}" class="text-white hover:text-xyz-yellow mr-2">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <img src="{{ url_for('static', filename='uploads/' + recipient.profile_pic) if recipient.profile_pic else 'https://ui-avatars.com/api/?name=' + recipient.name }}" 
+             class="w-10 h-10 rounded-full border border-gray-600 object-cover">
+        <div>
+            <h3 class="font-bold text-white leading-tight">{{ recipient.name }}</h3>
+            <p class="text-xs text-green-500">Online</p>
+        </div>
+    </div>
+
+    <div id="chat-box" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar bg-black">
+        {% for msg in messages %}
+            <div class="flex {{ 'justify-end' if msg.sender_id == current_user.id else 'justify-start' }}">
+                <div class="max-w-[75%] px-4 py-2 rounded-2xl text-sm 
+                            {{ 'bg-xyz-yellow text-black rounded-br-none' if msg.sender_id == current_user.id else 'bg-zinc-800 text-white rounded-bl-none' }}">
+                    <p>{{ msg.body }}</p>
+                    <span class="text-[10px] opacity-70 block text-right mt-1">{{ msg.timestamp.strftime('%H:%M') }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="p-3 border-t border-zinc-800 bg-black shrink-0">
+        <form id="chat-form" class="flex gap-2">
+            <input type="text" id="message-input" placeholder="Tulis pesan..." autocomplete="off" required
+                   class="flex-1 bg-zinc-900 text-white border border-zinc-700 rounded-full px-4 py-2 focus:outline-none focus:border-xyz-yellow transition">
+            <button type="submit" class="bg-xyz-yellow text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-white transition font-bold shadow-lg">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    const socket = io();
+    const currentUser = "{{ current_user.username }}";
+    const recipientUser = "{{ recipient.username }}";
+    
+    const chatBox = document.getElementById('chat-box');
+    const chatForm = document.getElementById('chat-form');
+    const messageInput = document.getElementById('message-input');
+
+    // Fungsi Scroll ke Bawah
+    function scrollToBottom() {
+        if(chatBox) {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+    
+    // Jalankan saat load
+    setTimeout(scrollToBottom, 100);
+
+    chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const msg = messageInput.value;
+        if (msg.trim()) {
+            socket.emit('send_message', {
+                recipient: recipientUser,
+                message: msg
+            });
+            messageInput.value = ''; 
+            messageInput.focus();
+        }
+    });
+
+    socket.on('receive_message', function(data) {
+        if ((data.sender === currentUser && data.recipient === recipientUser) || 
+            (data.sender === recipientUser && data.recipient === currentUser)) {
+            
+            const isMe = data.sender === currentUser;
+            const align = isMe ? 'justify-end' : 'justify-start';
+            const color = isMe ? 'bg-xyz-yellow text-black rounded-br-none' : 'bg-zinc-800 text-white rounded-bl-none';
+
+            const html = `
+                <div class="flex ${align}">
+                    <div class="max-w-[75%] px-4 py-2 rounded-2xl text-sm ${color}">
+                        <p>${data.body}</p>
+                        <span class="text-[10px] opacity-70 block text-right mt-1">${data.time}</span>
+                    </div>
+                </div>
+            `;
+            chatBox.innerHTML += html;
+            scrollToBottom();
+        }
+    });
+</script>
+{% endblock %}

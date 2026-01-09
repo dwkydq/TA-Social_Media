@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-white/10 backdrop-blur-sm p-4">
+    
+    <div class="w-full max-w-[600px] bg-black rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
+        
+        <form action="{{ url_for('user.edit_profile') }}" method="POST" enctype="multipart/form-data" class="flex flex-col h-full">
+            
+            <div class="flex items-center justify-between px-4 py-3 sticky top-0 bg-black/80 backdrop-blur z-20">
+                <div class="flex items-center gap-6">
+                    <a href="{{ url_for('user.profile', username=current_user.username) }}" class="text-white text-xl p-2 rounded-full hover:bg-zinc-800 transition">
+                        <i class="fas fa-times"></i>
+                    </a>
+                    <h2 class="text-xl font-bold text-white">Edit profil</h2>
+                </div>
+                <button type="submit" class="bg-white text-black font-bold px-5 py-1.5 rounded-full hover:bg-gray-200 transition text-sm">
+                    Simpan
+                </button>
+            </div>
+
+            <div class="overflow-y-auto custom-scrollbar flex-1 relative">
+                
+                <div class="relative mb-16">
+                    <div class="h-48 w-full bg-zinc-800 relative group cursor-pointer overflow-hidden">
+    
+                        <img id="cover-preview" 
+                            src="{{ url_for('static', filename='uploads/' + current_user.cover_pic) if current_user.cover_pic else 'https://picsum.photos/seed/' + current_user.username + '/1200/400' }}" 
+                            class="w-full h-full object-cover opacity-70 transition group-hover:opacity-50">
+                        
+                        <label for="cover-upload" class="absolute inset-0 flex items-center justify-center gap-4 opacity-100 cursor-pointer">
+                            <div class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition backdrop-blur-sm">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </label>
+
+                        <input type="file" id="cover-upload" name="cover_pic" class="hidden" accept="image/*">
+                    </div>
+
+                    <div class="absolute -bottom-12 left-4">
+                        <div class="relative w-28 h-28 rounded-full border-4 border-black group cursor-pointer overflow-hidden">
+                            <img id="pfp-preview" 
+                                 src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) if current_user.profile_pic else 'https://ui-avatars.com/api/?name=' + current_user.name + '&background=random&color=fff&size=128&bold=true' }}" 
+                                 class="w-full h-full object-cover bg-zinc-800 opacity-70 group-hover:opacity-50 transition">
+                            
+                            <label for="pfp-upload" class="absolute inset-0 flex items-center justify-center z-10 cursor-pointer">
+                                <div class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition backdrop-blur-sm">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                            </label>
+                            <input type="file" id="pfp-upload" name="profile_pic" class="hidden" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-4 pb-10 space-y-6">
+                    
+                    <div class="border border-zinc-700 rounded bg-black focus-within:border-xyz-yellow focus-within:ring-1 focus-within:ring-xyz-yellow transition relative pt-5 pb-2 px-3">
+                        <label class="absolute top-2 left-3 text-xs text-gray-500 font-medium">Nama</label>
+                        <input type="text" name="name" value="{{ current_user.name }}" required
+                               class="w-full bg-transparent text-white text-lg focus:outline-none placeholder-transparent border-none p-0">
+                    </div>
+
+                    <div class="border border-zinc-700 rounded bg-black focus-within:border-xyz-yellow focus-within:ring-1 focus-within:ring-xyz-yellow transition relative pt-5 pb-2 px-3">
+                        <label class="absolute top-2 left-3 text-xs text-gray-500 font-medium">Bio</label>
+                        <textarea name="bio" rows="3" maxlength="160"
+                                  class="w-full bg-transparent text-white text-lg focus:outline-none placeholder-transparent border-none p-0 resize-none">{{ current_user.bio }}</textarea>
+                    </div>
+
+                    <div class="border border-zinc-700 rounded bg-black focus-within:border-xyz-yellow focus-within:ring-1 focus-within:ring-xyz-yellow transition relative pt-5 pb-2 px-3">
+                        <label class="absolute top-2 left-3 text-xs text-gray-500 font-medium">Lokasi</label>
+                        <input type="text" name="location" value="{{ current_user.location or '' }}" placeholder="Contoh: Jakarta, Indonesia"
+                               class="w-full bg-transparent text-white text-lg focus:outline-none placeholder-gray-600 border-none p-0">
+                    </div>
+
+                    <div class="border border-zinc-700 rounded bg-black focus-within:border-xyz-yellow focus-within:ring-1 focus-within:ring-xyz-yellow transition relative pt-5 pb-2 px-3">
+                        <label class="absolute top-2 left-3 text-xs text-gray-500 font-medium">Username</label>
+                        <input type="text" name="username" value="{{ current_user.username }}" required
+                               class="w-full bg-transparent text-white text-lg focus:outline-none border-none p-0 text-gray-300">
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

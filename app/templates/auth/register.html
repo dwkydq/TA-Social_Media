@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block auth_content %}
+<div class="auth-card">
+    <div class="xyz-logo">XYZ.</div>
+    <h2 class="text-xl font-bold mb-6 text-gray-400">Join XYZ Social</h2>
+    
+    <form action="{{ url_for('auth.register') }}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="name" class="auth-input" placeholder="Nama Lengkap" required>
+        <input type="text" name="username" class="auth-input" placeholder="Username (tanpa spasi)" required>
+        <input type="email" name="email" class="auth-input" placeholder="Email Aktif" required>
+        <input type="password" name="password" class="auth-input" placeholder="Buat Password" required>
+        
+        <div class="text-left mt-4 mb-4 bg-zinc-800 p-3 border-2 border-black rounded shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <label class="block text-xyz-yellow text-sm font-bold mb-2">Foto Profil (Opsional)</label>
+            <input type="file" name="profile_pic" class="text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-xyz-yellow file:text-black hover:file:bg-yellow-400">
+        </div>
+
+        <button type="submit" class="btn-xyz">
+            Daftar Akun <i class="fas fa-rocket ml-2"></i>
+        </button>
+    </form>
+    
+    <div class="mt-6 border-t-2 border-gray-700 pt-4">
+        <p class="auth-footer">Sudah punya akun? <a href="{{ url_for('auth.login') }}">Login Aja</a></p>
+    </div>
+</div>
+{% endblock %}

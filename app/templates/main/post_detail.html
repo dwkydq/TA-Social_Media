@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-4">
+    
+    <div class="mb-4">
+        <a href="{{ url_for('frontend.home') }}" class="text-gray-400 hover:text-white flex items-center gap-2 transition">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
+    </div>
+
+    <div class="bg-zinc-900 border-2 border-black p-5 shadow-[6px_6px_0px_0px_#fbbf24] rounded-xl relative">
+        
+        <div class="flex justify-between items-start mb-4">
+            <div class="flex gap-3">
+                <img src="{{ url_for('static', filename='uploads/' + post.author.profile_pic) if post.author.profile_pic else 'https://ui-avatars.com/api/?name=' + post.author.name }}" 
+                     class="w-12 h-12 rounded-full border border-white object-cover">
+                <div>
+                    <h3 class="font-bold text-white text-lg">{{ post.author.name }}</h3>
+                    <div class="text-sm text-gray-400">@{{ post.author.username }}</div>
+                </div>
+            </div>
+
+            {% if post.author == current_user %}
+            <a href="{{ url_for('post.delete_post', post_id=post.id) }}" 
+               onclick="return confirm('Yakin hapus postingan ini?')"
+               class="text-gray-600 hover:text-red-500 transition px-2">
+                <i class="fas fa-trash"></i>
+            </a>
+            {% endif %}
+        </div>
+        
+        <div class="text-white mb-4 text-xl whitespace-pre-line leading-relaxed">{{ post.caption }}</div>
+        
+        {% if post.media_url %}
+        <div class="mb-4">
+            {% if post.media_type == 'video' %}
+                <video controls autoplay class="w-full rounded-lg border-2 border-black bg-black max-h-[600px]">
+                    <source src="{{ url_for('static', filename='uploads/' + post.media_url) }}" type="video/mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            {% else %}
+                <img src="{{ url_for('static', filename='uploads/' + post.media_url) }}" 
+                     class="w-full rounded-lg border-2 border-black object-cover max-h-[600px]">
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="text-gray-500 text-sm py-3 border-b border-gray-800 mb-3">
+            {{ post.created_at.strftime('%H:%M · %d %b %Y') }}
+        </div>
+
+        <div class="flex items-center gap-6 text-white mb-4">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-heart text-red-500"></i>
+                <span class="font-bold">{{ post.likes|length }}</span> <span class="text-gray-500 font-normal">Suka</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-comment text-blue-400"></i>
+                <span class="font-bold">{{ post.comments|length }}</span> <span class="text-gray-500 font-normal">Komentar</span>
+            </div>
+        </div>
+
+        <div class="bg-black/30 p-4 rounded-lg border border-gray-700">
+            <h4 class="text-white font-bold mb-3">Komentar ({{ post.comments|length }})</h4>
+            
+            <form action="{{ url_for('post.add_comment', post_id=post.id) }}" method="POST" class="flex gap-2 mb-6">
+                <input type="text" name="content" placeholder="Tulis komentar..." required autocomplete="off"
+                       class="flex-1 bg-zinc-800 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-xyz-yellow transition">
+                <button type="submit" class="bg-xyz-yellow text-black font-bold px-6 rounded-lg hover:bg-white transition">
+                    Kirim
+                </button>
+            </form>
+
+            <div class="space-y-4">
+                {% for comment in post.comments %}
+                <div class="flex gap-3">
+                    <img src="{{ url_for('static', filename='uploads/' + comment.author.profile_pic) if comment.author.profile_pic else 'https://ui-avatars.com/api/?name=' + comment.author.name }}" 
+                         class="w-8 h-8 rounded-full border border-gray-600 object-cover mt-1">
+                    
+                    <div class="flex-1 bg-zinc-800/50 p-3 rounded-lg border border-gray-800 relative group">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="font-bold text-white text-sm">{{ comment.author.name }} <span class="text-gray-500 font-normal ml-1">@{{ comment.author.username }}</span></span>
+                            <span class="text-gray-600 text-xs">{{ comment.created_at.strftime('%d %b') }}</span>
+                        </div>
+                        <p class="text-gray-300 text-sm">{{ comment.content }}</p>
+
+                        {% if current_user == comment.author or current_user == post.author %}
+                        <a href="{{ url_for('post.delete_comment', comment_id=comment.id) }}" 
+                           onclick="return confirm('Hapus komentar ini?')"
+                           class="absolute top-3 right-3 text-gray-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition">
+                            <i class="fas fa-trash text-xs"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                    <p class="text-gray-500 text-sm italic text-center">Belum ada komentar.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

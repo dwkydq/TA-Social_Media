@@ -1,0 +1,161 @@
+:root {
+    /* Palet Warna XYZ */
+    --xyz-yellow: #fbbf24;
+    --xyz-black: #000000;
+    --xyz-white: #ffffff;
+    --xyz-dark: #18181b;   
+    --xyz-gray: #27272a;   
+    
+    --sidebar-width: 275px;
+    --feed-width: 600px;
+}
+
+body {
+    background-color: var(--xyz-dark);
+    color: var(--xyz-white);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* --- TOMBOL KHAS XYZ (Saweria Style) --- */
+.btn-xyz {
+    background-color: var(--xyz-yellow);
+    color: var(--xyz-black);
+    font-weight: 800;
+    border: 2px solid var(--xyz-black);
+    padding: 12px 24px;
+    border-radius: 8px; /* Sudut sedikit tumpul */
+    cursor: pointer;
+    box-shadow: 4px 4px 0px var(--xyz-black); /* Hard Shadow */
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%; /* Default full width */
+}
+
+/* Efek saat tombol ditekan */
+.btn-xyz:hover {
+    transform: translate(-2px, -2px); /* Naik sedikit */
+    box-shadow: 6px 6px 0px var(--xyz-black);
+}
+
+.btn-xyz:active {
+    transform: translate(2px, 2px); /* Turun (efek ditekan) */
+    box-shadow: 0px 0px 0px var(--xyz-black);
+}
+
+/* --- AUTH PAGE STYLES (Login/Register) --- */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--xyz-dark);
+
+    background-image: radial-gradient(#3f3f46 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.auth-card {
+    background-color: var(--xyz-gray);
+    padding: 40px;
+    border: 3px solid var(--xyz-black);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    /* Hard shadow untuk kartu */
+    box-shadow: 8px 8px 0px var(--xyz-black); 
+    text-align: center;
+    position: relative;
+}
+
+/* Logo XYZ. Besar */
+.xyz-logo {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--xyz-yellow);
+    text-shadow: 3px 3px 0px var(--xyz-black);
+    margin-bottom: 10px;
+    display: inline-block;
+    font-family: 'Courier New', monospace; /* Font kesan retro */
+}
+
+.auth-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    background-color: var(--xyz-white);
+    border: 2px solid var(--xyz-black);
+    border-radius: 6px;
+    color: var(--xyz-black);
+    font-weight: bold;
+    font-size: 1rem;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.auth-input:focus {
+    outline: none;
+    background-color: #fffbeb;
+    box-shadow: 4px 4px 0px var(--xyz-yellow);
+}
+
+.auth-footer a {
+    color: var(--xyz-yellow);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    font-weight: bold;
+}
+
+/* --- Layout Dasar (Sidebar/Feed) --- */
+.layout-container {
+    display: flex;
+    width: 100%;
+    max-width: 1300px;
+    min-height: 100vh;
+    align-items: flex-start;
+}
+
+.sidebar { 
+    width: var(--sidebar-width); 
+    padding: 20px; 
+    border-right: 2px solid var(--xyz-gray);
+    position: sticky; 
+    top: 0;           
+    height: 100vh;    
+    overflow-y: auto;  
+}
+
+.feed { 
+    width: var(--feed-width); 
+    border-right: 2px solid var(--xyz-gray); 
+}
+
+.widgets { 
+    flex: 1; 
+    padding: 20px; 
+    position: sticky;
+    top: 0;           
+    height: 100vh;    
+    overflow-y: auto; 
+}
+
+.nav-item {
+    display: block;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--xyz-white);
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: 0.2s;
+    border-radius: 8px;
+}
+.nav-item:hover { background-color: var(--xyz-gray); color: var(--xyz-yellow); }
+
+/* Tombol Posting di Sidebar */
+.sidebar .btn-xyz { margin-top: 20px; }
+

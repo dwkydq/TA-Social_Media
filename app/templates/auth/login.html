@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block auth_content %}
+<div class="auth-card">
+    <div class="xyz-logo">XYZ.</div>
+    <h2 class="text-xl font-bold mb-6 text-gray-400">Login ke XYZ Social</h2>
+    
+    <form action="{{ url_for('auth.login') }}" method="POST">
+        <div class="mb-4">
+            <input type="email" name="email" class="auth-input" placeholder="Email Kamu..." required>
+        </div>
+        <div class="mb-6">
+            <input type="password" name="password" class="auth-input" placeholder="Password Rahasia..." required>
+        </div>
+        
+        <button type="submit" class="btn-xyz">
+            Masuk Sekarang <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+    </form>
+    
+    <div class="mt-6 border-t-2 border-gray-700 pt-4">
+        <p class="auth-footer">
+            Belum punya akun? <a href="{{ url_for('auth.register') }}">Daftar Dulu</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

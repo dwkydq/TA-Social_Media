@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-6 max-w-2xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-black text-white">Notifikasi</h2>
+        <button class="text-sm text-xyz-yellow hover:underline">Tandai semua dibaca</button>
+    </div>
+
+    <div class="space-y-4">
+        {% for n in notifications %}
+        
+        {% set target_link = '#' %}
+        {% if n.type == 'follow' %}
+            {% set target_link = url_for('user.profile', username=n.actor.username) %}
+        {% elif n.type in ['like', 'comment', 'mention'] and n.post_id %}
+            {% set target_link = url_for('post.post_detail', post_id=n.post_id) %}
+        {% endif %}
+
+        <a href="{{ target_link }}" class="block">
+            <div class="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 hover:border-xyz-yellow transition group relative {{ 'opacity-60' if n.is_read else '' }}">
+                
+                <div class="text-2xl w-10 text-center">
+                    {% if n.type == 'like' %}
+                        <i class="fas fa-heart text-red-500"></i>
+                    {% elif n.type == 'comment' %}
+                        <i class="fas fa-comment text-blue-400"></i>
+                    {% elif n.type == 'follow' %}
+                        <i class="fas fa-user-plus text-xyz-yellow"></i>
+                    {% elif n.type == 'mention' %}
+                        <i class="fas fa-at text-green-400"></i>
+                    {% endif %}
+                </div>
+
+                <img src="{{ url_for('static', filename='uploads/' + n.actor.profile_pic) if n.actor.profile_pic else 'https://ui-avatars.com/api/?name=' + n.actor.name }}" 
+                     class="w-12 h-12 rounded-full border border-gray-600 object-cover">
+                
+                <div class="flex-1">
+                    <p class="text-white text-sm">
+                        <span class="font-bold hover:underline">{{ n.actor.name }}</span> 
+                        <span class="text-gray-300">{{ n.message }}</span>
+                    </p>
+                    <span class="text-xs text-gray-500 mt-1 block">{{ n.created_at.strftime('%d %b %H:%M') }}</span>
+                </div>
+
+                {% if not n.is_read %}
+                    <div class="absolute top-4 right-4 w-2 h-2 bg-xyz-yellow rounded-full"></div>
+                {% endif %}
+
+            </div>
+        </a>
+        {% else %}
+            <div class="text-center text-gray-500 py-10">
+                <i class="far fa-bell-slash text-4xl mb-3 opacity-50"></i>
+                <p>Belum ada notifikasi.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
