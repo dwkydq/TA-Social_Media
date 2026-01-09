@@ -1,28 +1,5 @@
-# Mini X - Social Media App
-
-Aplikasi media sosial berbasis web dengan fitur real-time chat, posting media, like, komentar, dan sistem follow. Dibangun menggunakan Python Flask dan MySQL.
-
-## Daftar Isi
-
-- [Prasyarat](#prasyarat)
-- [Instalasi dan Setup](#instalasi-dan-setup)
-- [Menjalankan Aplikasi](#menjalankan-aplikasi)
-- [Struktur Project](#struktur-project)
-- [Fitur Utama](#fitur-utama)
-
-## Prasyarat
-
-- **Python 3.x**
-- **pip** (Python Package Installer)
-- **MySQL Server** (XAMPP / Laragon)
-- **Git** (Opsional)
-
-## Instalasi dan Setup
-
-Ikuti langkah-langkah berikut untuk menyiapkan project dari awal:
-
-### 1. Clone Project
-```bash
+# Mini X - Social Media App Aplikasi media sosial berbasis web dengan fitur real-time chat, posting media, like, komentar, dan sistem follow. Dibangun menggunakan Python Flask dan MySQL. ## Daftar Isi - [Prasyarat](#prasyarat) - [Instalasi dan Setup](#instalasi-dan-setup) - [Menjalankan Aplikasi](#menjalankan-aplikasi) - [Struktur Project](#struktur-project) - [Fitur Utama](#fitur-utama) ## Prasyarat - **Python 3.x** - **pip** (Python Package Installer) - **MySQL Server** (XAMPP / Laragon) - **Git** (Opsional) ## Instalasi dan Setup Ikuti langkah-langkah berikut untuk menyiapkan project dari awal: ### 1. Clone Project
+bash
 git clone [https://github.com/dwkydq/TA-Social_Media.git](https://github.com/dwkydq/TA-Social_Media.git)
 cd TA-Social_Media
 2. Buat Virtual Environment
@@ -73,7 +50,7 @@ Jalankan query:
 SQL
 
 CREATE DATABASE socialmedia;
-Tabel akan otomatis dibuat oleh SQLAlchemy saat aplikasi pertama kali dijalankan (jika kode db.create_all() sudah ada di __init__.py).
+Tabel akan otomatis dibuat oleh SQLAlchemy saat aplikasi pertama kali dijalankan.
 
 Menjalankan Aplikasi
 Pastikan virtual environment sudah aktif, lalu jalankan perintah:
@@ -91,71 +68,30 @@ Plaintext
 TA-Social_Media/
 ├── app/                        # Folder utama aplikasi
 │   ├── templates/              # File HTML (Frontend)
-│   │   ├── base.html           # Layout utama
-│   │   ├── home.html           # Halaman beranda
-│   │   ├── chat.html           # Halaman chat room
-│   │   └── ...                 
 │   ├── static/                 # File CSS, JS, dan Uploads
-│   │   ├── style.css
-│   │   ├── chat.js             # Logic Socket.IO Client
-│   │   └── uploads/            # Penyimpanan gambar user
-│   ├── __init__.py             # Inisialisasi Flask, SQLAlchemy, LoginManager
+│   ├── __init__.py             # Inisialisasi Flask & DB
 │   ├── models.py               # Definisi Tabel Database (User, Post, Chat)
 │   └── routes.py               # Logika Routing & Controller
 ├── venv/                       # Virtual Environment
-├── .env                        # Konfigurasi sensitif (Database & Secret Key)
-├── requirements.txt            # Daftar library (Flask, SQLAlchemy, dll)
+├── .env                        # Konfigurasi sensitif
+├── requirements.txt            # Daftar library
 ├── run.py                      # Entry point aplikasi
 └── README.md                   # Dokumentasi ini
-Penjelasan File Penting:
-run.py: Pintu masuk aplikasi. Menjalankan server Flask dengan dukungan Socket.IO.
-
-app/__init__.py: Tempat konfigurasi aplikasi, inisialisasi koneksi database (db), dan login manager.
-
-app/models.py: Representasi tabel database dalam bentuk Class Python (ORM). Contoh: Class User, Post, Chat.
-
-app/routes.py: Mengatur alur halaman. Contoh: Jika user akses /profile, file ini mengambil data dari database lalu melemparnya ke profile.html.
-
-app/templates/: Berisi tampilan antarmuka (UI) menggunakan Jinja2.
-
 Fitur Utama
-Berikut adalah daftar fitur dan routing yang tersedia dalam aplikasi:
+Autentikasi: Login & Register aman.
 
-1. Autentikasi User
-Login: /login (POST/GET) - Masuk menggunakan email & password.
+Posting: Upload foto/video dengan caption.
 
-Register: /register (POST/GET) - Pendaftaran akun baru.
+Interaksi: Like & Komentar.
 
-Logout: /logout - Keluar dari sesi.
+Real-time Chat: Pesan instan menggunakan Socket.IO.
 
-2. Posting & Timeline
-Home: / - Menampilkan feed postingan terbaru dari semua user.
+Profil: Edit profil dan follow user lain.
 
-Create Post: /post (POST) - Upload foto/video dengan caption.
 
-Delete Post: /delete_post/<id> - Menghapus postingan sendiri.
+### Langkah 3: Simpan (Commit)
 
-3. Interaksi
-Like Post: /like/<id> - Menyukai postingan.
-
-Comment: /comment/<id> - Memberikan komentar pada postingan.
-
-Follow: /follow/<id> - Mengikuti user lain.
-
-4. Real-time Chat
-Chat Room: /chat/<user_id>
-
-Menggunakan Socket.IO untuk komunikasi dua arah.
-
-Pesan tersimpan otomatis di database.
-
-Mendukung fitur typing indicator.
-
-Inbox: /inbox - Melihat daftar riwayat percakapan.
-
-5. Profil & Pencarian
-Profile: /profile/<id> - Melihat bio, followers, following, dan postingan user.
-
-Edit Profile: /edit-profile - Mengubah foto profil, nama, dan bio.
-
-Search: /search?q=keyword - Mencari user berdasarkan username.
+Setelah nama file diubah menjadi `README.md` dan isinya diganti dengan kode di atas:
+1.  Gulir ke bawah ke bagian **Commit changes**.
+2.  Tulis pesan commit, misal: "Fix README formatting".
+3.  Klik tombol hijau **Commit changes**.
