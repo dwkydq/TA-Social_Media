@@ -1,6 +1,6 @@
-# Flask REST API Project
+# Mini X - Social Media App
 
-Project ini adalah aplikasi REST API berbasis **Python Flask** dengan struktur MVC, database menggunakan **SQLAlchemy**, migrasi dengan **Flask-Migrate**, dan testing menggunakan **pytest**.
+Aplikasi media sosial berbasis web dengan fitur real-time chat, posting media, like, komentar, dan sistem follow. Dibangun menggunakan Python Flask dan MySQL.
 
 ---
 
@@ -9,335 +9,154 @@ Project ini adalah aplikasi REST API berbasis **Python Flask** dengan struktur M
 - [Prasyarat](#prasyarat)
 - [Instalasi dan Setup](#instalasi-dan-setup)
 - [Menjalankan Aplikasi](#menjalankan-aplikasi)
-- [Menjalankan Testing](#menjalankan-testing)
 - [Struktur Project](#struktur-project)
-- [Dokumentasi API](#dokumentasi-api)
+- [Fitur Utama](#fitur-utama)
 
 ---
 
 ## Prasyarat
 
-Pastikan sudah terinstall:
-
 - **Python 3.x**
 - **pip** (Python Package Installer)
+- **MySQL Server** (XAMPP / Laragon)
 - **Git** (Opsional)
 
 ---
 
 ## Instalasi dan Setup
+Ikuti langkah-langkah berikut untuk menyiapkan project dari awal:
 
-Ikuti langkah-langkah berikut untuk menyiapkan project dari awal.
-
-### 1. Clone atau Download Project
-
+### 1. Clone Project
 ```bash
-git clone <repository-url>
-cd <folder-project>
-2. Buat Virtual Environment
-Disarankan menggunakan virtual environment agar library tidak tercampur dengan sistem global.
+git clone [https://github.com/dwkydq/TA-Social_Media.git](https://github.com/dwkydq/TA-Social_Media.git)
+cd TA-Social_Media
+```
 
-bash
-Copy code
+### 2. Buat Virtual Environment
+Disarankan menggunakan virtual environment agar library tidak tercampur dengan sistem global.
+```
 # Windows
 python -m venv venv
 
-# Linux / Mac
+# Linux/Mac
 python3 -m venv venv
-3. Aktifkan Virtual Environment
+```
+
+### 3. Aktifkan Virtual Environment
 Langkah ini wajib dilakukan setiap kali akan menjalankan project.
-
-bash
-Copy code
+```
 # Windows (Command Prompt)
 venv\Scripts\activate
 
 # Windows (PowerShell)
 venv\Scripts\Activate.ps1
 
-# Linux / Mac
+# Linux/Mac
 source venv/bin/activate
-4. Install Dependencies
+```
+
+### 4. Install Dependencies
 Install semua library yang dibutuhkan yang terdaftar di requirements.txt.
-
-bash
-Copy code
+```
 pip install -r requirements.txt
-5. Setup Database (Migrasi)
-Inisialisasi dan jalankan migrasi database untuk membuat tabel.
+```
 
-bash
-Copy code
-# Inisialisasi folder migrations (jika belum ada)
-flask db init
+### 5. Konfigurasi Environment (.env)
+Buat file baru bernama .env di folder utama (sejajar dengan run.py), lalu isi konfigurasi berikut:
+```
+SECRET_KEY=rahasia_kunci_anda_disini
+DATABASE_URI=mysql+pymysql://root:@localhost/socialmedia
+```
+(Catatan: Sesuaikan root dan password database jika ada. Format: user:password@host/nama_db)
 
-# Membuat file migrasi berdasarkan model
-flask db migrate -m "Initial migration"
-
-# Menerapkan migrasi ke database (membuat tabel)
-flask db upgrade
-Menjalankan Aplikasi
-Pastikan virtual environment sudah aktif, lalu jalankan:
-
-bash
-Copy code
-flask run
-Atau menggunakan Python langsung:
-
-bash
-Copy code
-python main.py
-Aplikasi akan berjalan di:
-
-cpp
-Copy code
-http://127.0.0.1:5000/
-Menjalankan Testing
-Project ini menggunakan pytest untuk unit testing.
-
-bash
-Copy code
-pytest
-Struktur Project
-plaintext
-Copy code
-PYTHON/
-├── app/
-│   ├── controller/
-│   │   ├── __init__.py
-│   │   └── UserController.py
-│   ├── model/
-│   │   ├── __init__.py
-│   │   ├── todo.py
-│   │   └── user.py
-│   ├── __init__.py
-│   ├── response.py
-│   └── routes.py
-├── migrations/
-├── tests/
-│   ├── conftest.py
-│   └── test_user.py
-├── venv/
-├── .flaskenv
-├── app.db
-├── config.py
-├── main.py
-├── pytest.ini
-└── requirements.txt
-Dokumentasi API
-Get All Users
-URL: /users
-Method: GET
-
-json
-Copy code
-{
-  "data": [
-    {
-      "id": 1,
-      "name": "John Doe",
-      "email": "john@example.com"
-    }
-  ],
-  "message": ""
-}
-Create User
-URL: /users
-Method: POST
-
-json
-Copy code
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "secretpassword"
-}
-Get User Detail
-URL: /users/<id>
-Method: GET
-
-Update User
-URL: /users/<id>
-Method: PUT
-
-Delete User
-URL: /users/<id>
-Method: DELETE
-
-yaml
-Copy code
+### 6. Setup Database
+Pastikan MySQL (XAMPP/Laragon) sudah berjalan, lalu buat database kosong.
+1. Buka phpMyAdmin atau terminal MySQL.
+2. Jalankan query:
+```
+CREATE DATABASE socialmedia;
+```
+3. Tabel akan otomatis dibuat oleh SQLAlchemy saat aplikasi pertama kali dijalankan (jika kode db.create_all() sudah ada di __init__.py).
 
 ---
 
-## ✅ Cara Pakai di GitHub
-
-1. Buka repository kamu  
-2. Klik `README.md`  
-3. Klik ✏️ **Edit**  
-4. Hapus semua isi lama  
-5. **Paste teks di atas**  
-6. Klik **Commit changes**
+## Menjalankan Aplikasi
+Pastikan virtual environment sudah aktif, lalu jalankan perintah:
+```
+python run.py
+```
+Aplikasi akan berjalan di http://127.0.0.1:5000/.
 
 ---
 
-Kalau kamu mau, saya juga bisa:
-
-✨ Tambahin Swagger  
-✨ Tambahin ERD  
-✨ Tambahin Screenshot  
-✨ Buat versi Bahasa Inggris  
-✨ Buat dokumentasi API lengkap  
-
-Tinggal bilang mau yang mana 😎
-
-
-
-
-
-
-You said:
-
-kenapa jadinya seperti ini?
-
-ChatGPT said:
-Masalahnya bukan di GitHub, tapi di format Markdown README kamu yang rusak karena:
-
-❌ Penyebab Utama
-Code block tidak ditutup dengan benar
-Contoh yang salah:
-
-markdown
-Copy code
-`bash git clone cd
-Harusnya:
-
-markdown
-Copy code
-```bash
-git clone ...
-cd ...
-Copy code
-Judul & daftar tidak dipisah baris kosong
-Markdown butuh spasi/baris kosong agar rapi.
-
-Campur antara inline code (`) dan code block (```)
-Akibatnya teks tampil aneh seperti di screenshot.
-
-✅ Solusi: Gunakan README yang Sudah Benar
-Silakan hapus semua isi README lama, lalu paste 100% teks di bawah ini:
-
-🔽 COPY SEMUA DARI SINI 🔽
-markdown
-Copy code
-# Flask REST API Project
-
-Project ini adalah aplikasi REST API berbasis **Python Flask** dengan struktur MVC, database menggunakan **SQLAlchemy**, migrasi dengan **Flask-Migrate**, dan testing menggunakan **pytest**.
+## Struktur Project
+Berikut adalah struktur direktori project beserta penjelasannya:
+```
+TA-Social_Media/
+├── app/                        # Folder utama aplikasi
+│   ├── templates/              # File HTML (Frontend)
+│   │   ├── base.html           # Layout utama
+│   │   ├── home.html           # Halaman beranda
+│   │   ├── chat.html           # Halaman chat room
+│   │   └── ...                 
+│   ├── static/                 # File CSS, JS, dan Uploads
+│   │   ├── style.css
+│   │   ├── chat.js             # Logic Socket.IO Client
+│   │   └── uploads/            # Penyimpanan gambar user
+│   ├── __init__.py             # Inisialisasi Flask, SQLAlchemy, LoginManager
+│   ├── models.py               # Definisi Tabel Database (User, Post, Chat)
+│   └── routes.py               # Logika Routing & Controller
+├── venv/                       # Virtual Environment
+├── .env                        # Konfigurasi sensitif (Database & Secret Key)
+├── requirements.txt            # Daftar library (Flask, SQLAlchemy, dll)
+├── run.py                      # Entry point aplikasi
+└── README.md                   # Dokumentasi ini
+```
+### Penjelasan File Penting:
+- run.py: Pintu masuk aplikasi. Menjalankan server Flask dengan dukungan Socket.IO.
+- app/__init__.py: Tempat konfigurasi aplikasi, inisialisasi koneksi database (db), dan login manager.
+- app/models.py: Representasi tabel database dalam bentuk Class Python (ORM). Contoh: Class User, Post, Chat.
+- app/routes.py: Mengatur alur halaman. Contoh: Jika user akses /profile, file ini mengambil data dari database lalu melemparnya ke profile.html.
+- app/templates/: Berisi tampilan antarmuka (UI) menggunakan Jinja2.
 
 ---
 
-## Daftar Isi
+## Fitur Utama
+Berikut adalah daftar fitur dan routing yang tersedia dalam aplikasi:
 
-- [Prasyarat](#prasyarat)
-- [Instalasi dan Setup](#instalasi-dan-setup)
-- [Menjalankan Aplikasi](#menjalankan-aplikasi)
-- [Menjalankan Testing](#menjalankan-testing)
-- [Struktur Project](#struktur-project)
-- [Dokumentasi API](#dokumentasi-api)
+### 1. Autentikasi User
+1) Login: /login (POST/GET) - Masuk menggunakan email & password.
+2) Register: /register (POST/GET) - Pendaftaran akun baru.
+3) Logout: /logout - Keluar dari sesi.
+
+### 2. Posting & Timeline
+1) Home: / - Menampilkan feed postingan terbaru dari semua user.
+2) Create Post: /post (POST) - Upload foto/video dengan caption.
+3) Delete Post: /delete_post/<id> - Menghapus postingan sendiri.
+
+### 3. Interaksi
+1) Like Post: /like/<id> - Menyukai postingan.
+2) Comment: /comment/<id> - Memberikan komentar pada postingan.
+3) Follow: /follow/<id> - Mengikuti user lain.
+
+### 4. Real-time Chat
+1) Chat Room: /chat/<user_id>
+    - Menggunakan Socket.IO untuk komunikasi dua arah.
+    - Pesan tersimpan otomatis di database.
+    - Mendukung fitur typing indicator.
+2) Inbox: /inbox - Melihat daftar riwayat percakapan.
+
+### 5. Profil & Pencarian
+1) Profile: /profile/<id> - Melihat bio, followers, following, dan postingan user.
+2) Edit Profile: /edit-profile - Mengubah foto profil, nama, dan bio.
+3) Search: /search?q=keyword - Mencari user berdasarkan username.
 
 ---
 
-## Prasyarat
-
-Pastikan sudah terinstall:
-
-- **Python 3.x**
-- **pip** (Python Package Installer)
-- **Git** (Opsional)
-
----
-
-## Instalasi dan Setup
-
-Ikuti langkah-langkah berikut untuk menyiapkan project dari awal.
-
-### 1. Clone atau Download Project
-
-```bash
-git clone <repository-url>
-cd <folder-project>
-2. Buat Virtual Environment
-Disarankan menggunakan virtual environment agar library tidak tercampur dengan sistem global.
-
-Windows
-
-bash
-Copy code
-python -m venv venv
-Linux / Mac
-
-bash
-Copy code
-python3 -m venv venv
-3. Aktifkan Virtual Environment
-bash
-Copy code
-# Windows (Command Prompt)
-venv\Scripts\activate
-
-# Windows (PowerShell)
-venv\Scripts\Activate.ps1
-
-# Linux / Mac
-source venv/bin/activate
-4. Install Dependencies
-bash
-Copy code
-pip install -r requirements.txt
-5. Setup Database
-bash
-Copy code
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
-Menjalankan Aplikasi
-bash
-Copy code
-flask run
-Atau:
-
-bash
-Copy code
-python main.py
-Aplikasi berjalan di:
-
-cpp
-Copy code
-http://127.0.0.1:5000/
-Menjalankan Testing
-bash
-Copy code
-pytest
-Struktur Project
-plaintext
-Copy code
-PYTHON/
-├── app/
-│   ├── controller/
-│   ├── model/
-│   ├── response.py
-│   └── routes.py
-├── migrations/
-├── tests/
-├── venv/
-├── config.py
-├── main.py
-└── requirements.txt
-Dokumentasi API
-Get All Users
+## Dokumentasi API
+### Get All Users
 GET /users
-
-json
-Copy code
+```
 {
   "data": [
     {
@@ -348,21 +167,29 @@ Copy code
   ],
   "message": ""
 }
-Create User
+```
+### Create User
 POST /users
 
-json
-Copy code
+```
 {
   "name": "John Doe",
   "email": "john@example.com",
   "password": "secretpassword"
 }
-Get User Detail
+```
+
+### Get User Detail
+```
 GET /users/<id>
+```
 
-Update User
+### Update User
+```
 PUT /users/<id>
+```
 
-Delete User
+### Delete User
+```
 DELETE /users/<id>
+```
