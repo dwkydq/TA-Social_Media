@@ -56,18 +56,18 @@ source venv/bin/activate
 ```
 
 ### 4. Install Dependencies
-Install semua library yang dibutuhkan yang terdaftar di requirements.txt.
+Install semua library yang dibutuhkan yang terdaftar di `requirements.txt`.
 ```
 pip install -r requirements.txt
 ```
 
 ### 5. Konfigurasi Environment (.env)
-Buat file baru bernama .env di folder utama (sejajar dengan run.py), lalu isi konfigurasi berikut:
+Buat file baru bernama `.env` di folder utama (sejajar dengan `run.py`), lalu isi konfigurasi berikut:
 ```
 SECRET_KEY=rahasia_kunci_anda_disini
 DATABASE_URI=mysql+pymysql://root:@localhost/socialmedia
 ```
-(Catatan: Sesuaikan root dan password database jika ada. Format: user:password@host/nama_db)
+(Catatan: Sesuaikan `root` dan password database jika ada. Format: `user:password@host/nama_db`)
 
 ### 6. Setup Database
 Pastikan MySQL (XAMPP/Laragon) sudah berjalan, lalu buat database kosong.
@@ -76,7 +76,7 @@ Pastikan MySQL (XAMPP/Laragon) sudah berjalan, lalu buat database kosong.
 ```
 CREATE DATABASE socialmedia;
 ```
-3. Tabel akan otomatis dibuat oleh SQLAlchemy saat aplikasi pertama kali dijalankan (jika kode db.create_all() sudah ada di __init__.py).
+3. Tabel akan otomatis dibuat oleh SQLAlchemy saat aplikasi pertama kali dijalankan (jika kode `db.create_all()` sudah ada di `__init__.py`).
 
 ---
 
@@ -113,11 +113,11 @@ TA-Social_Media/
 └── README.md                   # Dokumentasi ini
 ```
 ### Penjelasan File Penting:
-- run.py: Pintu masuk aplikasi. Menjalankan server Flask dengan dukungan Socket.IO.
-- app/__init__.py: Tempat konfigurasi aplikasi, inisialisasi koneksi database (db), dan login manager.
-- app/models.py: Representasi tabel database dalam bentuk Class Python (ORM). Contoh: Class User, Post, Chat.
-- app/routes.py: Mengatur alur halaman. Contoh: Jika user akses /profile, file ini mengambil data dari database lalu melemparnya ke profile.html.
-- app/templates/: Berisi tampilan antarmuka (UI) menggunakan Jinja2.
+- **run.py:** Pintu masuk aplikasi. Menjalankan server Flask dengan dukungan Socket.IO.
+- **app/__init__.py:** Tempat konfigurasi aplikasi, inisialisasi koneksi database (`db`), dan login manager.
+- **app/models.py:** Representasi tabel database dalam bentuk Class Python (ORM). Contoh: Class `User`, `Post`, `Chat`.
+- **app/routes.py:** Mengatur alur halaman. Contoh: Jika user akses `/profile`, file ini mengambil data dari database lalu melemparnya ke `profile.html`.
+- **app/templates/:** Berisi tampilan antarmuka (UI) menggunakan Jinja2.
 
 ---
 
@@ -125,37 +125,37 @@ TA-Social_Media/
 Berikut adalah daftar fitur dan routing yang tersedia dalam aplikasi:
 
 ### 1. Autentikasi User
-1) Login: /login (POST/GET) - Masuk menggunakan email & password.
-2) Register: /register (POST/GET) - Pendaftaran akun baru.
-3) Logout: /logout - Keluar dari sesi.
+- **Login:** `/login` (POST/GET) - Masuk menggunakan email & password.
+- **Register:** `/register` (POST/GET) - Pendaftaran akun baru.
+- **Logout:** `/logout` - Keluar dari sesi.
 
 ### 2. Posting & Timeline
-1) Home: / - Menampilkan feed postingan terbaru dari semua user.
-2) Create Post: /post (POST) - Upload foto/video dengan caption.
-3) Delete Post: /delete_post/<id> - Menghapus postingan sendiri.
+- **Home:** `/` - Menampilkan feed postingan terbaru dari semua user.
+- **Create Post:** `/post` (POST) - Upload foto/video dengan caption.
+- **Delete Post:** `/delete_post/<id>` - Menghapus postingan sendiri.
 
 ### 3. Interaksi
-1) Like Post: /like/<id> - Menyukai postingan.
-2) Comment: /comment/<id> - Memberikan komentar pada postingan.
-3) Follow: /follow/<id> - Mengikuti user lain.
+- **Like Post:** `/like/<id>` - Menyukai postingan.
+- **Comment:** `/comment/<id>` - Memberikan komentar pada postingan.
+- **Follow:** `/follow/<id>` - Mengikuti user lain.
 
 ### 4. Real-time Chat
-1) Chat Room: /chat/<user_id>
-    - Menggunakan Socket.IO untuk komunikasi dua arah.
+- **Chat Room:** `/chat/<user_id>`
+    - Menggunakan **Socket.IO** untuk komunikasi dua arah.
     - Pesan tersimpan otomatis di database.
     - Mendukung fitur typing indicator.
-2) Inbox: /inbox - Melihat daftar riwayat percakapan.
+- **Chat list:** `/chat_list` - Melihat daftar riwayat percakapan.
 
 ### 5. Profil & Pencarian
-1) Profile: /profile/<id> - Melihat bio, followers, following, dan postingan user.
-2) Edit Profile: /edit-profile - Mengubah foto profil, nama, dan bio.
-3) Search: /search?q=keyword - Mencari user berdasarkan username.
+- **Profile:** `/profile/<id>` - Melihat bio, followers, following, dan postingan user.
+- **Edit Profile:** `/edit-profile` - Mengubah foto profil, nama, dan bio.
+- **Search:** `/search?q=keyword` - Mencari user berdasarkan username.
 
 ---
 
 ## Dokumentasi API
 ### Get All Users
-GET /users
+**GET** `/users`
 ```
 {
   "data": [
@@ -169,7 +169,7 @@ GET /users
 }
 ```
 ### Create User
-POST /users
+**POST** `/users`
 
 ```
 {
@@ -180,16 +180,11 @@ POST /users
 ```
 
 ### Get User Detail
-```
-GET /users/<id>
-```
+**GET** `/users/<id>`
+
 
 ### Update User
-```
-PUT /users/<id>
-```
+**PUT** `/users/<id>`
 
 ### Delete User
-```
-DELETE /users/<id>
-```
+**DELETE** `/users/<id>`
